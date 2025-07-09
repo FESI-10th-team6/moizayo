@@ -2,7 +2,8 @@ name: Sync Design Tokens
 
 on:
   pull_request:
-    branches: 'designToken'
+    # types: [opened]
+    branches: ['designToken']
     paths:
       - 'designToken.json' # design-tokens.json 경로에 맞게 조정
       - '.github/workflows/design-token-build.yml'
@@ -31,6 +32,6 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-          git add path/to/generated.css  # 실제 생성 파일 경로 지정
+          git add src/app/_variables.css  # 실제 생성 파일 경로 지정
           git diff --cached --quiet || git commit -m "chore: update design token output"
           git push
