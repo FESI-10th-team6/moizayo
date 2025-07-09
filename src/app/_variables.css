@@ -10,3 +10,7 @@
   --semantic-color-text-main: #111827;
   --semantic-color-text-sub: #374151;
 }
+
+@theme inline {
+  --color-primary: var(--semantic-color-primary);
+}
