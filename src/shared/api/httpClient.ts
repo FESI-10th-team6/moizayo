@@ -68,7 +68,6 @@ axiosInstance.interceptors.request.use(async (config) => {
   logRequest(config);
   return config;
 });
-let isAlreadyLoggingOut = false;
 
 axiosInstance.interceptors.response.use(
   (response: AxiosResponse) => {
@@ -93,13 +92,8 @@ axiosInstance.interceptors.response.use(
     const { code, message } = (data as { code?: string; message?: string }) || {};
     const pathname = typeof window !== 'undefined' ? window.location.pathname : '';
     const isAuthPage = pathname.includes('/signin') || pathname.includes('/signup');
-    if (
-      (code === 'UNAUTHORIZED' || code === 'INVALID_TOKEN') &&
-      !isAuthPage &&
-      !isAlreadyLoggingOut
-    ) {
+    if (status === 401 && !isAuthPage) {
       // 인증 실패 시 로그아웃 처리 후 로그인 페이지로 이동
-      isAlreadyLoggingOut = true;
       if (IS_CLIENT) {
         console.error('401 Unauthorized:', message);
         localStorage.removeItem('accessToken');
@@ -112,7 +106,8 @@ axiosInstance.interceptors.response.use(
           window.location.href = `/${currentLocale}/signin`;
         });
       }
-      return;
+      // global-error 를 안태우기 위해 resolve 반환
+      return Promise.resolve(undefined);
     }
     // Sentry 도입시 500대 에러 등 심각한 에러 처리
     if (status >= 500) {
