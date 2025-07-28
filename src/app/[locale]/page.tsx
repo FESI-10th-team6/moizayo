@@ -5,6 +5,11 @@ interface HomePageProps {
   params: Promise<{ locale: Locale }>;
 }
 
+/**
+ * Renders the home page with localized title and welcome message based on the provided locale.
+ *
+ * Awaits the `params` prop to extract the locale, retrieves translations for the home page namespace, and displays the localized title and welcome text.
+ */
 export default async function HomePage({ params }: HomePageProps) {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: 'pages.home' });
