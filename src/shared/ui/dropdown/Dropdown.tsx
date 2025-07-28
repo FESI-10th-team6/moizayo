@@ -1,6 +1,7 @@
 'use client';
 
-import { ReactNode, useState } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
+import { usePathname } from 'next/navigation';
 
 interface DropdownProps {
   children: (props: {
@@ -22,5 +23,10 @@ export const Dropdown = ({ children, defaultValue }: DropdownProps) => {
     setIsOpen(false);
   };
 
-  return <>{children({ isOpen, toggle, selectedValue, onSelect })}</>;
+  const pathname = usePathname();
+
+  useEffect(() => {
+    setIsOpen(false);
+  }, [pathname]);
+  return <div className="relative">{children({ isOpen, toggle, selectedValue, onSelect })}</div>;
 };

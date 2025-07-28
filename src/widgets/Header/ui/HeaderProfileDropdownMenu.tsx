@@ -1,0 +1,78 @@
+import React from 'react';
+import { Session } from 'next-auth';
+import { signOut } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
+import { ProfileImage } from '@/shared/ui/ProfileImage';
+import { Dropdown, DropdownItem, DropdownList, DropdownTrigger } from '@/shared/ui/dropdown';
+
+type Props = { session: Session | null; status: string };
+
+const HeaderProfileDropdownMenu = ({ session, status }: Props) => {
+  const router = useRouter();
+  const handleClickSignOut = async () => {
+    await signOut({ redirect: false });
+    router.refresh();
+  };
+
+  return (
+    <Dropdown>
+      {({ isOpen, toggle, onSelect: closeDropdown }) => (
+        <div className="relative">
+          <DropdownTrigger
+            onClick={toggle}
+            disabled={status === 'loading'}
+            size="small"
+            className="flex !w-auto items-center justify-center rounded-full px-1.5 py-0 transition-colors hover:border-gray-300 hover:bg-gray-50"
+          >
+            <ProfileImage
+              url={session?.user?.image}
+              size={40}
+            />
+          </DropdownTrigger>
+
+          <DropdownList
+            isOpen={isOpen}
+            className="absolute top-full z-[var(--z-dropdown)] mt-1 !w-[120px] overflow-hidden rounded-lg border border-gray-200 bg-white shadow-lg"
+          >
+            {/* 드롭다운 헤더 */}
+            <div className="border-b border-gray-100 bg-gray-50 px-4 py-3">
+              <div className="flex items-center gap-2"></div>
+            </div>
+
+            {/* 언어 옵션들 */}
+
+            <DropdownItem
+              value={'myPage'}
+              onSelect={(value) => {
+                closeDropdown(value);
+              }}
+              size="small"
+              className={`!w-full cursor-pointer px-4 py-3 text-left`}
+            >
+              <div className="flex items-center justify-between">
+                <span className="text-sm font-medium">마이페이지</span>
+              </div>
+            </DropdownItem>
+
+            <DropdownItem
+              value={'logout'}
+              onSelect={(value) => {
+                closeDropdown(value);
+              }}
+              size="small"
+              className={`!w-full cursor-pointer px-4 py-3 text-left`}
+            >
+              <div className="flex items-center justify-between">
+                <button onClick={handleClickSignOut}>
+                  <span className="text-sm font-medium">signout</span>
+                </button>
+              </div>
+            </DropdownItem>
+          </DropdownList>
+        </div>
+      )}
+    </Dropdown>
+  );
+};
+
+export default HeaderProfileDropdownMenu;

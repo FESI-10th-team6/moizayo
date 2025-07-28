@@ -30,6 +30,7 @@ axiosInstance.interceptors.request.use(async (config) => {
     if (IS_CLIENT) {
       const session = await getSession();
       const accessToken = session?.user?.accessToken;
+      console.log({ session });
       token = accessToken;
     } else {
       // const rawToken = await getToken({
@@ -67,6 +68,7 @@ axiosInstance.interceptors.request.use(async (config) => {
   logRequest(config);
   return config;
 });
+let isAlreadyLoggingOut = false;
 
 axiosInstance.interceptors.response.use(
   (response: AxiosResponse) => {
@@ -89,9 +91,15 @@ axiosInstance.interceptors.response.use(
     }
     const { status, data } = error.response;
     const { code, message } = (data as { code?: string; message?: string }) || {};
-
-    if (code === 'UNAUTHORIZED' || code === 'INVALID_TOKEN') {
+    const pathname = typeof window !== 'undefined' ? window.location.pathname : '';
+    const isAuthPage = pathname.includes('/signin') || pathname.includes('/signup');
+    if (
+      (code === 'UNAUTHORIZED' || code === 'INVALID_TOKEN') &&
+      !isAuthPage &&
+      !isAlreadyLoggingOut
+    ) {
       // 인증 실패 시 로그아웃 처리 후 로그인 페이지로 이동
+      isAlreadyLoggingOut = true;
       if (IS_CLIENT) {
         console.error('401 Unauthorized:', message);
         localStorage.removeItem('accessToken');

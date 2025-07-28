@@ -16,4 +16,5 @@ export type SigninPayload = {
 
 export type SigninResponse = {
   token: string;
+  ok: boolean;
 };

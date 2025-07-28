@@ -1,25 +1,20 @@
 'use client';
 
-import { signOut, useSession } from 'next-auth/react';
+import { useSession } from 'next-auth/react';
 import { useTranslations } from 'next-intl';
-import { useRouter } from 'next/navigation';
 import { ROUTES } from '@/shared/config/routes';
-import { Button } from '@/shared/ui/button';
 import { HeaderLink } from './HeaderLink';
+import HeaderProfileDropdownMenu from './HeaderProfileDropdownMenu';
 import { LanguageSwitcher } from './LanguageSwitcher';
 import { Logo } from './Logo';
 import { MobileGNB } from './MobileGNB';
 
 export const Header = () => {
   const t = useTranslations('navigation');
-  const router = useRouter();
-  const { data: session, status } = useSession();
-  // console.log({ session, status });
+  const { status, data: session } = useSession();
+  // const session = getSession();
+  console.log({ session }, status, session?.user?.id, session?.user.image);
 
-  const handleSignOut = async () => {
-    await signOut({ redirect: false });
-    router.refresh();
-  };
   // useEffect(() => {
   //   if (status === 'authenticated' && session) {
   //     // session.expires 는 ISO 문자열
@@ -49,9 +44,11 @@ export const Header = () => {
         <div className="flex items-center gap-2">
           <LanguageSwitcher />
 
-          {status}
-          {session ? (
-            <Button onClick={handleSignOut}>{t('logout')}</Button>
+          {status === 'authenticated' ? (
+            <HeaderProfileDropdownMenu
+              session={session}
+              status={status}
+            />
           ) : (
             <HeaderLink
               className="bg-primary w-18 rounded-[5px] px-2.5 py-1 text-center font-semibold whitespace-nowrap text-white hover:bg-orange-600"
@@ -60,17 +57,6 @@ export const Header = () => {
               {t('signin')}
             </HeaderLink>
           )}
-          {/* <HeaderLink
-            href={session && ROUTES.SIGNIN}
-            className="bg-primary w-18 rounded-[5px] px-2.5 py-1 text-center font-semibold whitespace-nowrap text-white hover:bg-orange-600"
-            onClick={() => {
-              if (session) {
-                signoutApi();
-              }
-            }}
-          >
-            {session ? t('logout') : t('signin')}
-          </HeaderLink> */}
         </div>
       </div>
     </header>

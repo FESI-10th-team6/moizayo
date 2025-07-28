@@ -12,7 +12,13 @@ export const DropdownList = ({ isOpen, className, children, ...props }: Dropdown
 
   return (
     <div
-      className={twMerge('mt-1 rounded border border-gray-200 bg-white shadow-sm', className)}
+      className={twMerge(
+        'absolute z-50 mt-1 rounded border border-gray-200 bg-white shadow-sm',
+        'max-h-[calc(100vh-20px)] max-w-[calc(100vw-20px)]',
+        'overflow-auto',
+        'right-0',
+        className,
+      )}
       {...props}
     >
       {children}

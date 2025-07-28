@@ -74,7 +74,7 @@ export const LanguageSwitcher = () => {
             className="flex h-7.5 !w-auto items-center justify-center rounded-full border border-gray-200 bg-white px-1.5 py-0 transition-colors hover:border-gray-300 hover:bg-gray-50"
           >
             <LanguageIcon
-              size={16}
+              size={20}
               className="text-gray-600"
             />
           </DropdownTrigger>
