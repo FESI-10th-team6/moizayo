@@ -36,8 +36,8 @@ export const SigninForm = () => {
 
     console.log('LOGIN', { result });
 
-    console.log(document.referrer);
-    router.back();
+    console.log('[REFERRER]', document.referrer);
+    router.push(document.referrer || ROUTES.ROOT);
   };
 
   return (
