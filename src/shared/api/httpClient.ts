@@ -1,5 +1,5 @@
 // import { getToken } from 'next-auth/jwt';
-import { getSession } from 'next-auth/react';
+import { getSession, signOut } from 'next-auth/react';
 // import { cookies } from 'next/headers';
 import { API_CONFIG } from '@/shared/config';
 import axios, { AxiosError, AxiosHeaders, AxiosRequestConfig, AxiosResponse } from 'axios';
@@ -90,7 +90,7 @@ axiosInstance.interceptors.response.use(
     const { status, data } = error.response;
     const { code, message } = (data as { code?: string; message?: string }) || {};
 
-    if (status === 401) {
+    if (code === 'UNAUTHORIZED' || code === 'INVALID_TOKEN') {
       // 인증 실패 시 로그아웃 처리 후 로그인 페이지로 이동
       if (IS_CLIENT) {
         console.error('401 Unauthorized:', message);
@@ -100,8 +100,9 @@ axiosInstance.interceptors.response.use(
         const currentPath = window.location.pathname;
         const localeMatch = currentPath.match(/^\/([a-z]{2})(\/|$)/);
         const currentLocale = localeMatch ? localeMatch[1] : 'ko';
-
-        window.location.href = `/${currentLocale}/signin`;
+        signOut({ redirect: false }).then(() => {
+          window.location.href = `/${currentLocale}/signin`;
+        });
       }
       return;
     }
