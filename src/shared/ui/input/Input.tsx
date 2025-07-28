@@ -77,7 +77,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
               className="shrink-0 cursor-pointer text-gray-500 hover:text-gray-700 focus:outline-none"
               aria-label={showPassword ? 'Hide password' : 'Show password'}
             >
-              {showPassword ? <VisibilityOffIcon /> : <VisibilityOnIcon />}
+              {showPassword ? <VisibilityOnIcon /> : <VisibilityOffIcon />}
             </button>
           )}
         </div>
