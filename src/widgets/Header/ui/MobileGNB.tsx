@@ -14,6 +14,12 @@ export const MobileGNB = () => {
   const pathname = usePathname();
   const locale = useLocale();
 
+  const menuItems = [
+    { href: ROUTES.GATHERING, label: t('findGatherings') },
+    { href: ROUTES.FAVORITE, label: t('favoriteGatherings') },
+    { href: ROUTES.REVIEW, label: t('allReviews') },
+  ];
+
   useEffect(() => {
     const handleResize = () => {
       if (
@@ -65,20 +71,27 @@ export const MobileGNB = () => {
         )}
       >
         <div className="flex h-14 items-center justify-end p-4">
-          <button onClick={() => setOpen(false)}>
+          <button
+            type="button"
+            onClick={() => setOpen(false)}
+            onFocus={() => setOpen(true)}
+            onBlur={() => setOpen(false)}
+          >
             <XIcon className="h-6 w-6 cursor-pointer" />
           </button>
         </div>
         <ul className="flex flex-col gap-4 p-4 text-center">
-          <li>
-            <HeaderLink href={ROUTES.GATHERING}>{t('findGatherings')}</HeaderLink>
-          </li>
-          <li>
-            <HeaderLink href={ROUTES.FAVORITE}>{t('favoriteGatherings')}</HeaderLink>
-          </li>
-          <li>
-            <HeaderLink href={ROUTES.REVIEW}>{t('allReviews')}</HeaderLink>
-          </li>
+          {menuItems.map((item) => (
+            <li key={item.href}>
+              <HeaderLink
+                href={item.href}
+                onFocus={() => setOpen(true)}
+                onBlur={() => setOpen(false)}
+              >
+                {item.label}
+              </HeaderLink>
+            </li>
+          ))}
         </ul>
       </nav>
     </>
