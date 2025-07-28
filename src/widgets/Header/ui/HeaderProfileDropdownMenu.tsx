@@ -34,13 +34,6 @@ const HeaderProfileDropdownMenu = ({ session, status }: Props) => {
             isOpen={isOpen}
             className="absolute top-full z-[var(--z-dropdown)] mt-1 !w-[120px] overflow-hidden rounded-lg border border-gray-200 bg-white shadow-lg"
           >
-            {/* 드롭다운 헤더 */}
-            <div className="border-b border-gray-100 bg-gray-50 px-4 py-3">
-              <div className="flex items-center gap-2"></div>
-            </div>
-
-            {/* 언어 옵션들 */}
-
             <DropdownItem
               value={'myPage'}
               onSelect={(value) => {

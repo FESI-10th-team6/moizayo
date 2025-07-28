@@ -81,7 +81,7 @@ export const LanguageSwitcher = () => {
 
           <DropdownList
             isOpen={isOpen}
-            className="absolute top-full left-0 z-[var(--z-dropdown)] mt-1 !w-[120px] overflow-hidden rounded-lg border border-gray-200 bg-white shadow-lg"
+            className="absolute top-full -right-11/12 z-[var(--z-dropdown)] mt-1 !w-[120px] overflow-hidden rounded-lg border border-gray-200 bg-white shadow-lg"
           >
             {/* 드롭다운 헤더 */}
             <div className="border-b border-gray-100 bg-gray-50 px-4 py-3">
