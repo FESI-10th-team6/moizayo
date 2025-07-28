@@ -11,7 +11,7 @@ describe('Button 컴포넌트에 관한 테스트 ', () => {
   it('variant primary가 정상 작동 하는가? ', () => {
     render(<Button variant="primary">확인</Button>);
     const button = screen.getByRole('button');
-    expect(button).toHaveClass('bg-[var(--color-primary)]');
+    expect(button).toHaveClass('bg-primary');
     expect(button).toHaveClass('text-white');
   });
   it('outline variant가 올바르게 적용되어야 한다', () => {
