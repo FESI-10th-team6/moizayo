@@ -1,7 +1,7 @@
 import NextAuth from 'next-auth';
 // import { decode as jwtDecode, encode as jwtEncode } from 'next-auth/jwt';
 import CredentialsProvider from 'next-auth/providers/credentials';
-import { signinApi } from '@/entities/auth/api/services';
+import { signinApi, signoutApi } from '@/entities/auth/api/services';
 
 const handler = NextAuth({
   providers: [
@@ -15,7 +15,7 @@ const handler = NextAuth({
         if (!credentials) return null;
 
         const { token: backendJWT } = await signinApi(credentials);
-
+        console.log(credentials);
         return {
           id: credentials.email,
           email: credentials.email,
@@ -43,6 +43,12 @@ const handler = NextAuth({
   //   },
   // },
 
+  events: {
+    async signOut(message) {
+      console.log('User signed out:', message);
+      await signoutApi();
+    },
+  },
   callbacks: {
     async jwt({ token, user }) {
       // user.token(=signinApi에서 받은 토큰)을 jwt token.accessToken에 저장
