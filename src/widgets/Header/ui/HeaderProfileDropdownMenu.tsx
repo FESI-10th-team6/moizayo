@@ -27,7 +27,7 @@ const HeaderProfileDropdownMenu = ({ session, status }: Props) => {
             onClick={toggle}
             disabled={status === 'loading'}
             size="small"
-            className="flex !w-auto items-center justify-center rounded-full px-1.5 py-0 transition-colors hover:border-gray-300 hover:bg-gray-50"
+            className="flex !w-auto items-center justify-center rounded-full transition-colors hover:border-gray-300 hover:bg-gray-50"
           >
             <ProfileImage
               url={session?.user?.image}
@@ -45,16 +45,14 @@ const HeaderProfileDropdownMenu = ({ session, status }: Props) => {
                 closeDropdown(value);
               }}
               size="small"
-              className={`!w-full cursor-pointer px-4 py-3 text-left`}
+              className={`w-full p-0`}
             >
-              <div className="flex items-center justify-between">
-                <HeaderLink
-                  href={ROUTES.MY_PAGE}
-                  className="text-sm font-medium"
-                >
-                  {t('myPage')}
-                </HeaderLink>
-              </div>
+              <HeaderLink
+                href={ROUTES.MY_PAGE}
+                className="flex h-full w-full items-center px-4 py-3 text-sm font-medium"
+              >
+                {t('myPage')}
+              </HeaderLink>
             </DropdownItem>
 
             <DropdownItem
@@ -63,16 +61,15 @@ const HeaderProfileDropdownMenu = ({ session, status }: Props) => {
                 closeDropdown(value);
               }}
               size="small"
-              className={`!w-full cursor-pointer px-4 py-3 text-left`}
+              className={`left w-full p-0`}
             >
-              <div className="flex items-center justify-between">
-                <button
-                  type="button"
-                  onClick={handleClickSignOut}
-                >
-                  <span className="text-sm font-medium">{t('logout')}</span>
-                </button>
-              </div>
+              <button
+                type="button"
+                onClick={handleClickSignOut}
+                className="t w-full cursor-pointer px-4 py-3 text-left"
+              >
+                <span className="text-sm font-medium">{t('logout')}</span>
+              </button>
             </DropdownItem>
           </DropdownList>
         </div>
