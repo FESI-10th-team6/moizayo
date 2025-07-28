@@ -1,9 +1,12 @@
 import React from 'react';
 import { Session } from 'next-auth';
 import { signOut } from 'next-auth/react';
+import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
+import { ROUTES } from '@/shared/config/routes';
 import { ProfileImage } from '@/shared/ui/ProfileImage';
 import { Dropdown, DropdownItem, DropdownList, DropdownTrigger } from '@/shared/ui/dropdown';
+import { HeaderLink } from './HeaderLink';
 
 type Props = { session: Session | null; status: string };
 
@@ -13,6 +16,8 @@ const HeaderProfileDropdownMenu = ({ session, status }: Props) => {
     await signOut({ redirect: true });
     router.refresh();
   };
+
+  const t = useTranslations('navigation');
 
   return (
     <Dropdown>
@@ -43,7 +48,12 @@ const HeaderProfileDropdownMenu = ({ session, status }: Props) => {
               className={`!w-full cursor-pointer px-4 py-3 text-left`}
             >
               <div className="flex items-center justify-between">
-                <span className="text-sm font-medium">마이페이지</span>
+                <HeaderLink
+                  href={ROUTES.MY_PAGE}
+                  className="text-sm font-medium"
+                >
+                  {t('myPage')}
+                </HeaderLink>
               </div>
             </DropdownItem>
 
@@ -56,8 +66,11 @@ const HeaderProfileDropdownMenu = ({ session, status }: Props) => {
               className={`!w-full cursor-pointer px-4 py-3 text-left`}
             >
               <div className="flex items-center justify-between">
-                <button onClick={handleClickSignOut}>
-                  <span className="text-sm font-medium">signout</span>
+                <button
+                  type="button"
+                  onClick={handleClickSignOut}
+                >
+                  <span className="text-sm font-medium">{t('logout')}</span>
                 </button>
               </div>
             </DropdownItem>

@@ -1,6 +1,5 @@
 import type { Locale } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
-import { Link } from '@/i18n';
 
 interface HomePageProps {
   params: Promise<{ locale: Locale }>;
@@ -14,13 +13,6 @@ export default async function HomePage({ params }: HomePageProps) {
     <div className="flex flex-1 flex-col items-center justify-center gap-4">
       <h1 className="text-2xl font-bold">{t('title')}</h1>
       <p className="text-xl text-gray-600">{t('welcome')}</p>
-
-      <Link
-        href="/my-page"
-        locale={locale}
-      >
-        My Page
-      </Link>
     </div>
   );
 }

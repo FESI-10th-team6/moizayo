@@ -62,7 +62,8 @@
     "findGatherings": "모임 찾기",
     "favoriteGatherings": "찜한 모임",
     "allReviews": "모든 리뷰",
-    "brand": "같이달램"
+    "brand": "같이달램",
+    "myPage": "마이페이지"
   },
   "filters": {
     "categories": {
@@ -105,7 +106,10 @@
       "password": "비밀번호",
       "loginButton": "로그인",
       "footerText": "계정이 없으신가요?",
-      "signupLink": "회원가입"
+      "signupLink": "회원가입",
+      "welcome": "Welcome to 같이 달램!",
+      "desc1": "바쁜 일상 속 잠깐의 휴식,",
+      "desc2": "이제는 같이 달램과 함께 해보세요"
     },
     "signup": {
       "title": "회원가입 페이지",

@@ -62,7 +62,8 @@
     "findGatherings": "Find Gatherings",
     "favoriteGatherings": "Favorite Gatherings",
     "allReviews": "All Reviews",
-    "brand": "Dallem"
+    "brand": "Dallem",
+    "myPage": "My Page"
   },
   "filters": {
     "categories": {
@@ -105,7 +106,10 @@
       "password": "Password",
       "loginButton": "Sign In",
       "footerText": "Don't have an account?",
-      "signupLink": "Sign Up"
+      "signupLink": "Sign Up",
+      "welcome": "Welcome to Dallem!",
+      "desc1": "Take a break from your busy daily life,",
+      "desc2": "and experience Dallem with us"
     },
     "signup": {
       "title": "Sign Up Page",
@@ -303,7 +307,8 @@
       "scoreLoadError": "score Loading Error .."
     },
     "favorites": {
-      "title": "Favorites Page"
+      "title": "Favorites Page",
+      "subTitle": "subtitle"
     }
   },
   "errors": {
