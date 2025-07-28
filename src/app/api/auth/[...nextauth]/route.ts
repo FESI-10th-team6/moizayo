@@ -16,14 +16,24 @@ const handler = NextAuth({
       async authorize(credentials) {
         if (!credentials) return null;
 
-        const res = await signinApi(credentials);
+        try {
+          const res = await signinApi(credentials);
 
-        console.log({ credentials, res });
-        return {
-          id: credentials.email,
-          email: credentials.email,
-          token: res.token,
-        };
+          if (!res?.token) {
+            console.error('Login failed: No token received');
+            return null;
+          }
+
+          console.log({ credentials, res });
+          return {
+            id: credentials.email,
+            email: credentials.email,
+            token: res.token,
+          };
+        } catch (error) {
+          console.error('Login error:', error);
+          return null;
+        }
       },
     }),
   ],
@@ -59,37 +69,42 @@ const handler = NextAuth({
       if (user?.token) {
         token.accessToken = user.token;
 
-        const userInfoResponse = await fetch(
-          API_CONFIG.BASE_URL(TEST_TEAM_ID) + API_ENDPOINTS.AUTH.USER,
-          {
-            headers: { Authorization: `Bearer ${user.token}` },
-          },
-        );
+        try {
+          const userInfoResponse = await fetch(
+            API_CONFIG.BASE_URL(TEST_TEAM_ID) + API_ENDPOINTS.AUTH.USER,
+            {
+              headers: { Authorization: `Bearer ${user.token}` },
+            },
+          );
 
-        const userInfo = await userInfoResponse.json();
-        console.log('USER INFO', userInfo);
-        token.name = userInfo.name;
-        token.id = userInfo.id;
-        token.image = userInfo.image;
-        token.companyName = userInfo.companyName;
+          if (!userInfoResponse.ok) {
+            console.error('Failed to fetch user info:', userInfoResponse.status);
+            return token;
+          }
+
+          const userInfo = await userInfoResponse.json();
+          console.log('USER INFO', userInfo);
+          token.name = userInfo.name;
+          token.id = userInfo.id;
+          token.image = userInfo.image;
+          token.companyName = userInfo.companyName;
+        } catch (error) {
+          console.error('Error fetching user info:', error);
+        }
       }
 
       return token;
     },
     async session({ session, token }) {
       // 클라이언트 useSession() 시 session.user.accessToken으로 꺼낼 수 있음
-      session.user.accessToken = token.accessToken;
-      console.log('SESSION - token exp', token.exp);
-      // if (token.exp) {
-      //   session.expires = new Date(token.exp * 1000).toISOString();
-      // }
-
-      console.log('session.expires', token, token.exp, session.expires);
-
       session.user.id = token.id?.toString();
       session.user.accessToken = token.accessToken;
       session.user.name = token.name;
       session.user.image = token.image;
+      session.user.companyName = token.companyName;
+
+      console.log('SESSION - token exp', token.exp);
+      console.log('session.expires', token, token.exp, session.expires);
 
       return session;
     },
