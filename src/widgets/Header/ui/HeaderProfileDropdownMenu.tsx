@@ -27,7 +27,7 @@ const HeaderProfileDropdownMenu = ({ session, status }: Props) => {
             onClick={toggle}
             disabled={status === 'loading'}
             size="small"
-            className="flex !w-auto items-center justify-center rounded-full transition-colors hover:border-gray-300 hover:bg-gray-50"
+            className="flex w-fit items-center justify-center rounded-full px-0 py-0 transition-colors hover:border-gray-300 hover:bg-gray-50"
           >
             <ProfileImage
               url={session?.user?.image}
