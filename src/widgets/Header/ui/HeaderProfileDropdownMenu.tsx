@@ -10,7 +10,7 @@ type Props = { session: Session | null; status: string };
 const HeaderProfileDropdownMenu = ({ session, status }: Props) => {
   const router = useRouter();
   const handleClickSignOut = async () => {
-    await signOut({ redirect: false });
+    await signOut({ redirect: true });
     router.refresh();
   };
 
