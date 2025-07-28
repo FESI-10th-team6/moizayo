@@ -7,6 +7,7 @@ declare module 'next-auth' {
       id?: string;
       image?: string;
       accessToken?: string;
+      companyName?: string;
     };
   }
   interface User extends DefaultUser {
@@ -20,5 +21,6 @@ declare module 'next-auth/jwt' {
     expires?: number;
     id?: number;
     image?: string;
+    companyName?: string;
   }
 }
